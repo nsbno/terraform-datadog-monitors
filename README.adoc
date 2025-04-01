@@ -1,0 +1,34 @@
+= Datadog Monitor Modules
+:!toc-title:
+:!toc-placement:
+:toc:
+
+Various modules to create Datadog Monitors
+
+toc::[]
+
+== About
+
+This is a collection of modules to help you set up Datadog Monitors!
+
+The focus for this module is sensible defaults, and a low amount of configuration.
+
+== Available Modules
+
+These are the available modules in this repository.
+
+link:./modules/log_level/[Datadog Log Level]::
+Monitor for too many logs with a specific log level in a service's Datadog logs.
+
+== Relevant Repositories
+
+You can use these repos together with this repo!
+
+link:https://github.com/nsbno/terraform-datadog-service[`nsbno/terraform-datadog-service`]::
+Connect a DataDog service to a team with metadata.
+
+link:https://github.com/nsbno/terraform-aws-ecs-service[`nsbno/terraform-aws-ecs-service`]::
+Connect an AWS ECS service to Datadog.
+
+link:https://github.com/nsbno/terraform-aws-lambda[`nsbno/terraform-aws-lambda`]::
+Connect an AWS Lambda function to Datadog.

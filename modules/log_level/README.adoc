@@ -1,0 +1,52 @@
+= Cloudwatch Log Level Logs Monitoring
+:!toc-title:
+:!toc-placement:
+:toc:
+
+Monitor for logs with a specific log level [INFO, DEBUG, WARN, ERROR] in a service's Datadog logs.
+
+toc::[]
+
+== Usage
+
+Remember to check out the link:variables.tf[*variables*] to see all options.
+
+Example with default variables.
+[source, hcl]
+----
+module "datadog_log_level_error" {
+  source = "github.com/nsbno/terraform-datadog-monitors//modules/log_level?ref=x.y.z"
+  service_name = module.datadog_service.service_name
+
+  slack_channel_to_notify = "CSXU1BBA6"
+}
+----
+
+Example where you can configure variables.
+[source, hcl]
+----
+module "datadog_monitor_too_many_error_logs_with_custom_variables" {
+  source = "github.com/nsbno/terraform-datadog-monitors//modules/log_level?ref=x.y.z"
+
+  service_name = module.datadog_service.service_name
+
+  period           = "10m"
+  alert_threshold  = 5
+  priority         = 2
+
+  workflow_to_attach = "@workflow-notify-slack-of-monitor-event"
+}
+----
+
+== Relevant Repositories
+
+You can use these repos together with this repo!
+
+link:https://github.com/nsbno/terraform-datadog-service[`nsbno/terraform-datadog-service`]::
+Connect a DataDog service to a team with metadata.
+
+link:https://github.com/nsbno/terraform-aws-ecs-service[`nsbno/terraform-aws-ecs-service`]::
+Connect an AWS ECS service to Datadog.
+
+link:https://github.com/nsbno/terraform-aws-lambda[`nsbno/terraform-aws-lambda`]::
+Connect an AWS Lambda function to Datadog.
