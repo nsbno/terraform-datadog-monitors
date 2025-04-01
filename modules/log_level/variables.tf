@@ -48,3 +48,9 @@ variable "slack_channel_to_notify" {
 
   default     = null
 }
+
+variable "index_to_monitor" {
+  description = "Datadog index to monitor. Can be main or non-prod"
+
+  default = "main"
+}
