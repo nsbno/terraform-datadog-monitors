@@ -20,14 +20,14 @@ module "task" {
 }
 
 module "datadog_monitor_too_many_error_logs" {
-  source = "../../log_level"
+  source = "../../modules/log_level"
 
   service_name = module.datadog_service.service_name
 }
 
 
 module "datadog_monitor_too_many_error_logs_with_custom_variables" {
-  source = "../../log_level"
+  source = "../../modules/log_level"
 
   service_name = module.datadog_service.service_name
 
