@@ -39,5 +39,12 @@ variable "workflow_to_attach" {
   description = "The workflow to attach to the monitor. Find your workflow handle in the Datadog page for workflows"
   type        = string
 
-  default = "@workflow-notify-slack-of-monitor-event"
+  default = null
+}
+
+variable "slack_channel_to_notify" {
+  description = "Slack Channel to notify when alarm is triggered. Channel ID or channel name prefixed with '#'"
+  type        = string
+
+  default     = null
 }

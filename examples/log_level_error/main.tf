@@ -23,6 +23,8 @@ module "datadog_monitor_too_many_error_logs" {
   source = "../../modules/log_level"
 
   service_name = module.datadog_service.service_name
+
+  slack_channel_to_notify = "CSXU1BBA6"
 }
 
 
@@ -35,5 +37,5 @@ module "datadog_monitor_too_many_error_logs_with_custom_variables" {
   alert_threshold  = 5
   priority         = 2
 
-  workflow_to_attach = "@workflow-infrademo-notify-slack-of-monitor-event"
+  workflow_to_attach = "@workflow-notify-slack-of-monitor-event"
 }
