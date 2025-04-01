@@ -24,7 +24,7 @@ resource "datadog_monitor" "too_many_logs_of_log_level" {
   priority = var.priority
 
   query   = "logs(\"${local.log_query}\").index(\"${var.index_to_monitor}\").rollup(\"count\").last(\"${var.period}\") > ${var.alert_threshold}"
-  message = var.workflow_to_attach != null ? var.workflow_to_attach : "@workflow-notify-slack-of-monitoring-event(slack_channel='${var.slack_channel_to_notify}')"
+  message = var.workflow_to_attach != null ? var.workflow_to_attach : "@workflow-notify-slack-of-monitoring-event(slack_channel=\"${var.slack_channel_to_notify}\")"
 
   enable_logs_sample  = true
   require_full_window = false
