@@ -11,6 +11,8 @@ toc::[]
 
 Remember to check out the link:variables.tf[*variables*] to see all options.
 
+IMPORTANT: Remember to add Datadog as a integration in your Slack channel!
+
 Example with default variables.
 [source, hcl]
 ----
