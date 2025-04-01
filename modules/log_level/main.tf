@@ -5,8 +5,9 @@ locals {
   split_alias       = split("-", data.aws_iam_account_alias.this.account_alias)
   environment_index = length(local.split_alias) - 1
   environment       = local.split_alias[local.environment_index]
+  env_tag           = "env:${local.environment}"
 
-  log_query = "env:${local.environment} ${local.service_name_tag} @level:${var.log_level_to_monitor}"
+  log_query = "${local.env_tag} ${local.service_name_tag} @level:${var.log_level_to_monitor}"
 }
 
 data "aws_iam_account_alias" "this" {}
@@ -18,7 +19,7 @@ data "aws_ssm_parameter" "team_name" {
 resource "datadog_monitor" "too_many_logs_of_log_level" {
   name = "${var.service_name}: Too many logs of log level: ${var.log_level_to_monitor}"
   type = "log alert"
-  tags = compact(["team:${data.aws_ssm_parameter.team_name.value}", local.service_name_tag])
+  tags = compact(["team:${data.aws_ssm_parameter.team_name.value}", local.service_name_tag, local.env_tag])
 
   priority = var.priority
 
