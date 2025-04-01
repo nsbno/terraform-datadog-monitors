@@ -31,8 +31,8 @@ resource "datadog_monitor" "too_many_logs_of_log_level" {
 
   lifecycle {
     precondition {
-      condition     = var.workflow_to_attach != null || var.slack_channel_to_notify != null
-      error_message = "Either workflow_to_attach or slack_channel_to_notify must be provided."
+      condition     = (var.workflow_to_attach != null) != (var.slack_channel_to_notify != null)
+      error_message = "Exactly one of workflow_to_attach or slack_channel_to_notify must be provided, not both."
     }
   }
 }
