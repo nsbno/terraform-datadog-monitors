@@ -22,7 +22,7 @@ resource "datadog_monitor" "too_many_logs_of_log_level" {
 
   priority = var.priority
 
-  query = "(${logs(local.log_query).index("main").rollup("count").last(var.period) > var.alert_threshold})"
+  query = "logs(\"${local.log_query}\").index(\"main\").rollup(\"count\").last(\"${var.period}\") > ${var.alert_threshold}"
   message = var.workflow_to_attach
 
   enable_logs_sample = true
