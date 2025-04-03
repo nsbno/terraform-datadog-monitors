@@ -20,8 +20,8 @@ module "datadog_log_level_error" {
   source = "github.com/nsbno/terraform-datadog-monitors//modules/log_level?ref=x.y.z"
   service_name = module.datadog_service.service_name
 
-  # Channel ID or channel name, e.g. #tmp-test-slack
-  slack_channel_to_notify = "CSXU1BBA6"
+  # channel name only, e.g. tmp-test-slack
+  slack_channel_to_notify = "tmp-test-slack"
 }
 ----
 

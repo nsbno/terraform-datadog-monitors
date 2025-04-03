@@ -43,7 +43,7 @@ variable "workflow_to_attach" {
 }
 
 variable "slack_channel_to_notify" {
-  description = "Slack Channel to notify when alarm is triggered. Channel ID or channel name prefixed with '#'"
+  description = "Slack channel name"
   type        = string
 
   default     = null
