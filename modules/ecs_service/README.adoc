@@ -1,0 +1,61 @@
+= ECS Monitoring
+:!toc-title:
+:!toc-placement:
+:toc:
+
+Monitor for high CPU and memory usage for an AWS ECS service.
+
+toc::[]
+
+== Usage
+
+Remember to check out the link:variables.tf[*variables*] to see all options.
+
+IMPORTANT: Remember to add Datadog as a integration in your Slack channel! You also need to integrate Datadog with your AWS account.
+
+Example with default variables.
+[source, hcl]
+----
+module "datadog_log_level_error" {
+  source = "github.com/nsbno/terraform-datadog-monitors//modules/ecs_service?ref=x.y.z"
+
+  service_name         = module.datadog_service.service_name
+  service_display_name = "Infrademo Demo App"
+
+  # channel name only, e.g. tmp-test-slack
+  slack_channel_to_notify = "tmp-test-slack"
+}
+----
+
+Example where you can configure variables.
+[source, hcl]
+----
+module "datadog_ecs_alarms_custom_threshold" {
+  source = "github.com/nsbno/terraform-datadog-monitors//modules/ecs_service?ref=x.y.z"
+
+  service_name         = module.datadog_service.service_name
+  service_display_name = "Infrademo Demo App"
+
+  cpu_alert_threshold    = 70
+  memory_alert_threshold = 85
+
+  # If you want to use your team's own workflow
+  workflow_to_attach = "@workflow-notify-slack-of-monitor-event"
+}
+----
+
+== Relevant Repositories
+
+You can use these repos together with this repo!
+
+link:https://github.com/nsbno/terraform-datadog-service[`nsbno/terraform-datadog-service`]::
+Connect a DataDog service to a team with metadata.
+
+link:https://github.com/nsbno/terraform-aws-ecs-service[`nsbno/terraform-aws-ecs-service`]::
+Connect an AWS ECS service to Datadog.
+
+link:https://github.com/nsbno/terraform-aws-lambda[`nsbno/terraform-aws-lambda`]::
+Connect an AWS Lambda function to Datadog.
+
+link:github.com/nsbno/terraform-datadog-aws-integration[`nsbno/terraform-datadog-aws-integration`]::
+Connect an AWS account to Datadog.
