@@ -20,6 +20,9 @@ These are the available modules in this repository.
 link:./modules/log_level/[Datadog Log Level]::
 Monitor for too many logs with a specific log level in a service's Datadog logs.
 
+link:./modules/ecs_service/[Datadog ECS Service]::
+Monitor for high CPU and memory usage for a service.
+
 == Relevant Repositories
 
 You can use these repos together with this repo!
