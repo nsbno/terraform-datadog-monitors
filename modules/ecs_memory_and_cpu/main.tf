@@ -2,6 +2,8 @@ locals {
   service_tag      = var.service_name != null ? format("service:%s", var.service_name) : null
   service_name_tag = var.service_name != null ? format("servicename:%s", var.service_name) : null
 
+  display_name = var.service_display_name != null ? var.service_display_name : title(var.service_name)
+
   # The account alias includes the name of the environment we are in as a suffix
   split_alias       = split("-", data.aws_iam_account_alias.this.account_alias)
   environment_index = length(local.split_alias) - 1
@@ -18,7 +20,7 @@ data "aws_ssm_parameter" "team_name" {
 }
 
 resource "datadog_monitor" "high_memory_usage" {
-  name = "${var.service_display_name != null ? var.service_display_name : title(var.service_name)}: High Memory Usage"
+  name = "${local.display_name}: High Memory Usage"
   type = "query alert"
   tags = compact([local.account_name_tag, local.service_tag, local.env_tag, local.team_tag])
 
@@ -34,7 +36,7 @@ resource "datadog_monitor" "high_memory_usage" {
 @slack-${var.slack_channel_to_notify}
 
 {{#is_alert}}
-  ${var.service_display_name} has crossed the memory usage threshold of {{threshold}}%. Average last 5 minutes was {{value}}%
+  ${local.display_name} has crossed the memory usage threshold of {{threshold}}%. Average last 5 minutes was {{value}}%
 {{/is_alert}}
 
 {{#is_recovery}}
@@ -51,7 +53,7 @@ EOT
 }
 
 resource "datadog_monitor" "high_cpu_usage" {
-  name = "${var.service_display_name}: High CPU Usage"
+  name = "${local.display_name}: High CPU Usage"
   type = "query alert"
   tags = compact([local.account_name_tag, local.service_tag, local.env_tag, local.team_tag])
 
@@ -67,7 +69,7 @@ resource "datadog_monitor" "high_cpu_usage" {
 @slack-${var.slack_channel_to_notify}
 
 {{#is_alert}}
-  ${var.service_display_name} has crossed the CPU usage threshold of {{threshold}}%. Average last 5 minutes was {{value}}%
+  ${local.display_name} has crossed the CPU usage threshold of {{threshold}}%. Average last 5 minutes was {{value}}%
 {{/is_alert}}
 
 {{#is_recovery}}
