@@ -1,8 +1,6 @@
 variable "service_name" {
   description = "The name of the service. A group of function names can be part of the same service"
   type        = string
-
-  default = null
 }
 
 variable "service_display_name" {

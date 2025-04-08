@@ -1,5 +1,5 @@
 locals {
-  service_tag = var.service_name != null ? format("service:%s", var.service_name) : null
+  service_tag      = var.service_name != null ? format("service:%s", var.service_name) : null
   service_name_tag = var.service_name != null ? format("servicename:%s", var.service_name) : null
 
   # The account alias includes the name of the environment we are in as a suffix
@@ -18,7 +18,7 @@ data "aws_ssm_parameter" "team_name" {
 }
 
 resource "datadog_monitor" "high_memory_usage" {
-  name = "${var.service_display_name}: High Memory Usage"
+  name = "${var.service_display_name != null ? var.service_display_name : title(var.service_name)}: High Memory Usage"
   type = "query alert"
   tags = compact([local.account_name_tag, local.service_tag, local.env_tag, local.team_tag])
 
