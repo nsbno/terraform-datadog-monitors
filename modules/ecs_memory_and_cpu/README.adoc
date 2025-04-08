@@ -17,7 +17,7 @@ Example with default variables.
 [source, hcl]
 ----
 module "datadog_log_level_error" {
-  source = "github.com/nsbno/terraform-datadog-monitors//modules/ecs_service?ref=x.y.z"
+  source = "github.com/nsbno/terraform-datadog-monitors//modules/ecs_memory_and_cpu?ref=x.y.z"
 
   service_name         = module.datadog_service.service_name
   service_display_name = "Infrademo Demo App"
@@ -31,7 +31,7 @@ Example where you can configure variables.
 [source, hcl]
 ----
 module "datadog_ecs_alarms_custom_threshold" {
-  source = "github.com/nsbno/terraform-datadog-monitors//modules/ecs_service?ref=x.y.z"
+  source = "github.com/nsbno/terraform-datadog-monitors//modules/ecs_memory_and_cpu?ref=x.y.z"
 
   service_name         = module.datadog_service.service_name
   service_display_name = "Infrademo Demo App"

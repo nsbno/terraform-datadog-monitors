@@ -20,7 +20,7 @@ module "task" {
 }
 
 module "datadog_ecs_alarms" {
-  source = "github.com/nsbno/terraform-datadog-monitors//modules/ecs_service?ref=x.y.z"
+  source = "github.com/nsbno/terraform-datadog-monitors//modules/ecs_memory_and_cpu?ref=x.y.z"
 
   service_name         = module.datadog_service.service_name
   service_display_name = "Infrademo Demo App"
@@ -29,7 +29,7 @@ module "datadog_ecs_alarms" {
 }
 
 module "datadog_ecs_alarms_custom_threshold" {
-  source = "github.com/nsbno/terraform-datadog-monitors//modules/ecs_service?ref=x.y.z"
+  source = "github.com/nsbno/terraform-datadog-monitors//modules/ecs_memory_and_cpu?ref=x.y.z"
 
   service_name         = module.datadog_service.service_name
   service_display_name = "Infrademo Demo App"
