@@ -1,6 +1,8 @@
 locals {
   service_name_tag = var.service_name != null ? format("service:%s", var.service_name) : null
 
+  display_name = var.service_display_name != null ? var.service_display_name : title(var.service_name)
+
   # The account alias includes the name of the environment we are in as a suffix
   split_alias       = split("-", data.aws_iam_account_alias.this.account_alias)
   environment_index = length(local.split_alias) - 1
@@ -17,7 +19,7 @@ data "aws_ssm_parameter" "team_name" {
 }
 
 resource "datadog_monitor" "too_many_logs_of_log_level" {
-  name = "${title(var.service_name)}: Too many logs of log level: ${var.log_level_to_monitor}"
+  name = "${local.display_name}: Too many logs of log level: ${var.log_level_to_monitor}"
   type = "log alert"
   tags = compact(["team:${data.aws_ssm_parameter.team_name.value}", local.service_name_tag, local.env_tag])
 

@@ -5,6 +5,13 @@ variable "service_name" {
   default = null
 }
 
+variable "service_display_name" {
+  description = "The display name of the service for the monitor"
+  type        = string
+
+  default = null
+}
+
 variable "log_level_to_monitor" {
   description = "The log level to monitor. Can be one of: debug, info, warn, error"
   type        = string
