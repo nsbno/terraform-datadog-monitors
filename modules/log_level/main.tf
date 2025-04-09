@@ -7,7 +7,7 @@ locals {
   environment       = local.split_alias[local.environment_index]
   env_tag           = "env:${local.environment}"
 
-  log_query = "${local.env_tag} ${local.service_name_tag} @level:${var.log_level_to_monitor}"
+  log_query = "${local.env_tag} ${local.service_name_tag} status:${lower(var.log_level_to_monitor)}"
 }
 
 data "aws_iam_account_alias" "this" {}
@@ -17,7 +17,7 @@ data "aws_ssm_parameter" "team_name" {
 }
 
 resource "datadog_monitor" "too_many_logs_of_log_level" {
-  name = "${var.service_name}: Too many logs of log level: ${var.log_level_to_monitor}"
+  name = "${title(var.service_name)}: Too many logs of log level: ${var.log_level_to_monitor}"
   type = "log alert"
   tags = compact(["team:${data.aws_ssm_parameter.team_name.value}", local.service_name_tag, local.env_tag])
 

@@ -6,10 +6,10 @@ variable "service_name" {
 }
 
 variable "log_level_to_monitor" {
-  description = "The log level to monitor. Can be one of: DEBUG, INFO, WARN, ERROR"
+  description = "The log level to monitor. Can be one of: debug, info, warn, error"
   type        = string
 
-  default = "ERROR"
+  default = "error"
 }
 
 variable "alert_threshold" {
