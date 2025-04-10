@@ -16,7 +16,7 @@ IMPORTANT: Remember to add Datadog as a integration in your Slack channel! You a
 Example with default variables.
 [source, hcl]
 ----
-module "datadog_log_level_error" {
+module "datadog_ecs_memory_and_cpu_monitor" {
   source = "github.com/nsbno/terraform-datadog-monitors//modules/ecs_memory_and_cpu?ref=x.y.z"
 
   service_name         = module.datadog_service.service_name
