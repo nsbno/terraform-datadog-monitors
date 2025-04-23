@@ -1,7 +1,7 @@
 locals {
-  service_tag      = var.application_tag_value != null ? format("service:%s", var.application_tag_value) : null
+  service_tag      = var.service_name != null ? format("service:%s", var.service_name) : null
 
-  display_name = var.service_display_name != null ? var.service_display_name : title(var.application_tag_value)
+  display_name = var.service_display_name != null ? var.service_display_name : title(var.service_name)
 
   # The account alias includes the name of the environment we are in as a suffix
   split_alias       = split("-", data.aws_iam_account_alias.this.account_alias)
@@ -10,7 +10,8 @@ locals {
   env_tag           = "env:${local.environment}"
   account_name_tag  = "account-name:${data.aws_iam_account_alias.this.account_alias}"
   team_tag          = "team:${data.aws_ssm_parameter.team_name.value}"
-  application_tag   = "application:${var.application_tag_value}"
+  target_group_tag  = "targetgroup:${var.target_group_arn_suffix}"
+  load_balancer_tag = "loadbalancer:${var.load_balancer_arn_suffix}"
 }
 
 data "aws_iam_account_alias" "this" {}
@@ -32,7 +33,7 @@ resource "datadog_monitor" "unhealthy_host_count" {
   notification_preset_name = var.notification_preset_name
   require_full_window      = var.require_full_window
 
-  query   = "min(last_${var.period}):min:aws.applicationelb.healthy_host_count.minimum{${local.account_name_tag},${local.application_tag}} < ${var.threshold}"
+  query   = "min(last_${var.period}):min:aws.applicationelb.healthy_host_count{${local.target_group_tag}, ${local.load_balancer_tag}} < ${var.threshold}"
   message = var.workflow_to_attach != null ? var.workflow_to_attach : <<EOT
   @slack-${var.slack_channel_to_notify}
 

@@ -16,20 +16,22 @@ IMPORTANT: Remember to add Datadog as a integration in your Slack channel! You a
 Example with default variables.
 [source, hcl]
 ----
-// Make sure to set the `application`-tag on all AWS resources in the provider.
-provider "aws" {
-  default_tags {
-    tags = {
-      application = "infrademo-demo-app"
-    }
-  }
+// Prerequisites:
+module "metadata" {
+  source = "github.com/nsbno/terraform-aws-account-metadata?ref=x.y.z"
+}
+
+module "service" {
+  source = "github.com/nsbno/terraform-aws-ecs-service?ref=x.y.z"
+  [...]
 }
 
 module "datadog_load_balancer" {
   source = "github.com/nsbno/terraform-datadog-monitors//modules/load_balancer?ref=x.y.z"
 
-  application_tag_value = "infrademo-demo-app"
-  service_display_name  = "Infrademo Demo App"
+  service_display_name     = "Infrademo Demo App"
+  target_group_arn_suffix  = module.service.target_group_arn_suffixes[0]
+  load_balancer_arn_suffix = module.metadata.load_balancer.arn_suffix
 
   # channel name only, e.g. tmp-test-slack
   slack_channel_to_notify = "tmp-test-slack"
@@ -39,20 +41,22 @@ module "datadog_load_balancer" {
 Example where you can configure variables.
 [source, hcl]
 ----
-// Make sure to set the `application`-tag on all AWS resources in the provider.
-provider "aws" {
-  default_tags {
-    tags = {
-      application = "infrademo-demo-app"
-    }
-  }
+// Prerequisites:
+module "metadata" {
+  source = "github.com/nsbno/terraform-aws-account-metadata?ref=x.y.z"
+}
+
+module "service" {
+  source = "github.com/nsbno/terraform-aws-ecs-service?ref=x.y.z"
+  [...]
 }
 
 module "datadog_load_balancer" {
   source = "github.com/nsbno/terraform-datadog-monitors//modules/load_balancer?ref=x.y.z"
 
-  application_tag_value = "infrademo-demo-app"
-  service_display_name  = "Infrademo Demo App"
+  service_display_name     = "Infrademo Demo App"
+  target_group_arn_suffix  = module.service.target_group_arn_suffixes[0]
+  load_balancer_arn_suffix = module.metadata.load_balancer.arn_suffix
 
   threshold    = 2
   period       = "10m"

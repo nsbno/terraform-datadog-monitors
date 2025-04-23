@@ -1,5 +1,15 @@
-variable "application_tag_value" {
-  description = "The value of the `application`-tag of the resource to monitor."
+variable "service_name" {
+  description = "The name of the service. A group of function names can be part of the same service"
+  type        = string
+}
+
+variable "target_group_arn_suffix" {
+  description = "Target Group to monitor"
+  type        = string
+}
+
+variable "load_balancer_arn_suffix" {
+  description = "Load Balancer to monitor"
   type        = string
 }
 
