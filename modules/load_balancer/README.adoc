@@ -16,11 +16,20 @@ IMPORTANT: Remember to add Datadog as a integration in your Slack channel! You a
 Example with default variables.
 [source, hcl]
 ----
+// Make sure to set the `application`-tag on all AWS resources in the provider.
+provider "aws" {
+  default_tags {
+    tags = {
+      application = "infrademo-demo-app"
+    }
+  }
+}
+
 module "datadog_load_balancer" {
   source = "github.com/nsbno/terraform-datadog-monitors//modules/load_balancer?ref=x.y.z"
 
-  service_name         = module.datadog_service.service_name
-  service_display_name = "Infrademo Demo App"
+  application_tag_value = "infrademo-demo-app"
+  service_display_name  = "Infrademo Demo App"
 
   # channel name only, e.g. tmp-test-slack
   slack_channel_to_notify = "tmp-test-slack"
@@ -30,11 +39,20 @@ module "datadog_load_balancer" {
 Example where you can configure variables.
 [source, hcl]
 ----
+// Make sure to set the `application`-tag on all AWS resources in the provider.
+provider "aws" {
+  default_tags {
+    tags = {
+      application = "infrademo-demo-app"
+    }
+  }
+}
+
 module "datadog_load_balancer" {
   source = "github.com/nsbno/terraform-datadog-monitors//modules/load_balancer?ref=x.y.z"
 
-  service_name         = module.datadog_service.service_name
-  service_display_name = "Infrademo Demo App"
+  application_tag_value = "infrademo-demo-app"
+  service_display_name  = "Infrademo Demo App"
 
   threshold    = 2
   period       = "10m"

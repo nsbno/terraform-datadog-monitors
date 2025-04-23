@@ -1,8 +1,7 @@
 locals {
-  service_tag      = var.service_name != null ? format("service:%s", var.service_name) : null
-  service_name_tag = var.service_name != null ? format("servicename:%s", var.service_name) : null
+  service_tag      = var.application_tag_value != null ? format("service:%s", var.application_tag_value) : null
 
-  display_name = var.service_display_name != null ? var.service_display_name : title(var.service_name)
+  display_name = var.service_display_name != null ? var.service_display_name : title(var.application_tag_value)
 
   # The account alias includes the name of the environment we are in as a suffix
   split_alias       = split("-", data.aws_iam_account_alias.this.account_alias)
@@ -11,7 +10,7 @@ locals {
   env_tag           = "env:${local.environment}"
   account_name_tag  = "account-name:${data.aws_iam_account_alias.this.account_alias}"
   team_tag          = "team:${data.aws_ssm_parameter.team_name.value}"
-  application_tag   = "application:${var.service_name}"
+  application_tag   = "application:${var.application_tag_value}"
 }
 
 data "aws_iam_account_alias" "this" {}

@@ -1,5 +1,5 @@
-variable "service_name" {
-  description = "The name of the service."
+variable "application_tag_value" {
+  description = "The value of the `application`-tag of the resource to monitor."
   type        = string
 }
 
