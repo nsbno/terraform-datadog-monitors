@@ -22,7 +22,7 @@ variable "slack_channel_to_notify" {
   description = "Slack channel name"
   type        = string
 
-  default     = null
+  default = null
 }
 
 /*
@@ -63,7 +63,18 @@ variable "require_full_window" {
 }
 
 variable "on_missing_data" {
-  default = "default"
-  type = string
+  default     = "default"
+  type        = string
   description = "How to treat missing data"
+}
+
+variable "include_tags" {
+  default     = false
+  description = "Whether notifications from this monitor automatically insert its triggering tags into the title"
+}
+
+variable "notification_preset_name" {
+  default     = "hide_all"
+  type        = string
+  description = "The notification preset to use for this monitor. See https://docs.datadoghq.com/monitors/notifications/?tab=notificationpresets#notification-presets"
 }

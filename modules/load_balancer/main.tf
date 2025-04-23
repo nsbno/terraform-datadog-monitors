@@ -11,6 +11,7 @@ locals {
   env_tag           = "env:${local.environment}"
   account_name_tag  = "account-name:${data.aws_iam_account_alias.this.account_alias}"
   team_tag          = "team:${data.aws_ssm_parameter.team_name.value}"
+  application_tag   = "application:${var.service_name}"
 }
 
 data "aws_iam_account_alias" "this" {}
@@ -28,11 +29,11 @@ resource "datadog_monitor" "unhealthy_host_count" {
   evaluation_delay = var.evaluation_delay
   on_missing_data  = var.on_missing_data
 
-  include_tags             = false
-  notification_preset_name = "hide_all"
-  require_full_window      = true
+  include_tags             = var.include_tags
+  notification_preset_name = var.notification_preset_name
+  require_full_window      = var.require_full_window
 
-  query   = "min(last_${var.period}):min:aws.applicationelb.healthy_host_count.minimum{application:${var.service_name} < ${var.threshold}"
+  query   = "min(last_${var.period}):min:aws.applicationelb.healthy_host_count.minimum{${local.account_name_tag},${local.application_tag}} < ${var.threshold}"
   message = var.workflow_to_attach != null ? var.workflow_to_attach : <<EOT
   @slack-${var.slack_channel_to_notify}
 
