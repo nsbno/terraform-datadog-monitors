@@ -18,7 +18,6 @@ Example with default variables.
 ----
 module "datadog_monitor_api_gateway" {
   source               = "github.com/nsbno/terraform-datadog-monitors//modules/api_gateway?ref=x.y.z"
-  service_display_name = "Infrademo Demo App"
 
   slack_channel_to_notify = "tmp-test-slack"
   api_name                = "infrademo-api"
@@ -30,7 +29,7 @@ Example where you can configure variables.
 ----
 module "datadog_monitor_api_gateway" {
   source               = "github.com/nsbno/terraform-datadog-monitors//modules/api_gateway?ref=x.y.z"
-  service_display_name = "Infrademo Demo App"
+  api_display_name = "Infrademo Demo App"
 
   slack_channel_to_notify = "tmp-test-slack"
   api_name                = "infrademo-api"

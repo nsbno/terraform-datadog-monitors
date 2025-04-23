@@ -1,16 +1,9 @@
-variable "service_name" {
-  description = "The name of the service. A group of function names can be part of the same service"
-  type        = string
-
-  default = null
-}
-
 variable "api_name" {
   description = "The name of the API in API Gateway"
   type        = string
 }
 
-variable "service_display_name" {
+variable "api_display_name" {
   description = "The display name of the service for the monitor"
   type        = string
 
@@ -66,4 +59,22 @@ variable "slack_channel_to_notify" {
   type        = string
 
   default = null
+}
+
+variable "evaluation_delay" {
+  default     = 900
+  type        = number
+  description = "Delay before evaluating the monitor. Datadog suggests 900 seconds for AWS metrics"
+}
+
+variable "require_full_window" {
+  default     = false
+  type        = bool
+  description = "A boolean indicating whether this monitor needs a full window of data before it’s evaluated. Datadog recommends you set this to False for sparse metrics, otherwise some evaluations are skipped. Default: False"
+}
+
+variable "on_missing_data" {
+  default = "default"
+  type = string
+  description = "How to treat missing data"
 }
