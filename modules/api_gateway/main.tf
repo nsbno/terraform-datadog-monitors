@@ -73,8 +73,8 @@ resource "datadog_monitor" "monitor_5xx" {
   evaluation_delay         = var.evaluation_delay
   on_missing_data          = var.on_missing_data
   require_full_window      = var.require_full_window
-  include_tags             = false
-  notification_preset_name = "hide_all"
+  include_tags             = var.include_tags
+  notification_preset_name = var.notification_preset_name
 
   query   = "sum(last_${var.latency_evaluation_period}):avg:aws.apigateway.5xxerror{${local.env_tag}, apiname:${var.api_name}}.as_count() >= ${var.error_5xx_threshold}"
   message = local.error_5xx_message
