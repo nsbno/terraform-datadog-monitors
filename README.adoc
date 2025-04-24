@@ -23,8 +23,12 @@ Monitor for too many logs with a specific log level in a service's Datadog logs.
 link:./modules/ecs_memory_and_cpu/[Datadog Memory and CPU]::
 Monitor for high CPU and memory usage for a service.
 
+link:./modules/load_balancer/[Datadog Load Balancer]::
+Monitor for unhealthy host count in Elastic Loadbalancer.
+
 link:./modules/api_gateway/[Datadog API Gateway]::
 Monitor for high integration latency and 5xx HTTP responses.
+
 
 == Relevant Repositories
 
