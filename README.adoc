@@ -29,6 +29,8 @@ Monitor for unhealthy host count in Elastic Loadbalancer.
 link:./modules/api_gateway/[Datadog API Gateway]::
 Monitor for high integration latency and 5xx HTTP responses.
 
+link:./modules/api_gateway/[RDS Overspent CPU Credits Monitor]::
+Monitor if an Aurora Cluster is charging for extra CPU credits.
 
 == Relevant Repositories
 

@@ -1,10 +1,10 @@
-variable "aurora_db_cluster_name" {
-  description = "The name of the service. A group of function names can be part of the same service"
+variable "db_cluster_name" {
+  description = "The name of the Aurora cluster"
   type        = string
 }
 
-variable "service_display_name" {
-  description = "The display name of the service"
+variable "db_cluster_display_name" {
+  description = "The display name of the database"
   type        = string
 
   default = null

@@ -1,7 +1,6 @@
 locals {
-  service_tag      = var.aurora_db_cluster_name != null ? format("service:%s", var.aurora_db_cluster_name) : null
-
-  display_name = var.service_display_name != null ? var.service_display_name : title(var.aurora_db_cluster_name)
+  service_tag  = var.db_cluster_name != null ? format("service:%s", var.db_cluster_name) : null
+  display_name = var.db_cluster_display_name != null ? var.db_cluster_display_name : title(var.db_cluster_name)
 
   # The account alias includes the name of the environment we are in as a suffix
   split_alias       = split("-", data.aws_iam_account_alias.this.account_alias)
@@ -10,7 +9,7 @@ locals {
   env_tag           = "env:${local.environment}"
   account_name_tag  = "account-name:${data.aws_iam_account_alias.this.account_alias}"
   team_tag          = "team:${data.aws_ssm_parameter.team_name.value}"
-  cluster_tag       = "cluseridentifier:${var.aurora_db_cluster_name}"
+  cluster_tag       = "dbclusteridentifier:${var.db_cluster_name}"
 }
 
 data "aws_iam_account_alias" "this" {}
