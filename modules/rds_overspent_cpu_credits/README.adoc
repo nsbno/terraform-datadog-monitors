@@ -1,0 +1,68 @@
+= RDS Overspent CPU Credits Monitor
+:!toc-title:
+:!toc-placement:
+:toc:
+
+Monitor for Aurora Cluster charging for extra CPU credits.
+
+toc::[]
+
+== Usage
+
+Remember to check out the link:variables.tf[*variables*] to see all options.
+
+IMPORTANT: Remember to add Datadog as a integration in your Slack channel! You also need to integrate Datadog with your AWS account.
+
+Example with default variables.
+[source, hcl]
+----
+// Example prerequisite for an Aurora Cluster
+module "database" {
+  source = "github.com/nsbno/terraform-aws-relational-database?ref=x.y.z"
+  [...]
+}
+
+module "datadog_aurora_cpu_credits" {
+  source = "github.com/nsbno/terraform-datadog-monitors//modules/rds_overspent_cpu_credits?ref=x.y.z"
+  db_cluster_name = module.database.cluster_id
+  
+  slack_channel_to_notify = "tmp-test-slack"
+}
+----
+
+Example where you can configure variables.
+[source, hcl]
+----
+// Example prerequisite for an Aurora Cluster
+module "database" {
+  source = "github.com/nsbno/terraform-aws-relational-database?ref=x.y.z"
+  [...]
+}
+
+module "datadog_aurora_cpu_credits" {
+  source = "github.com/nsbno/terraform-datadog-monitors//modules/rds_overspent_cpu_credits?ref=x.y.z"
+  db_cluster_name = module.database.cluster_id
+  
+  db_cluster_display_name = "Alternative Transport"
+  slack_channel_to_notify = "tmp-test-slack"
+
+  period    = "15m"
+  threshold = "50"
+}
+----
+
+== Relevant Repositories
+
+You can use these repos together with this repo!
+
+link:https://github.com/nsbno/terraform-datadog-service[`nsbno/terraform-datadog-service`]::
+Connect a DataDog service to a team with metadata.
+
+link:https://github.com/nsbno/terraform-aws-ecs-service[`nsbno/terraform-aws-ecs-service`]::
+Connect an AWS ECS service to Datadog.
+
+link:https://github.com/nsbno/terraform-aws-lambda[`nsbno/terraform-aws-lambda`]::
+Connect an AWS Lambda function to Datadog.
+
+link:github.com/nsbno/terraform-datadog-aws-integration[`nsbno/terraform-datadog-aws-integration`]::
+Connect an AWS account to Datadog.
