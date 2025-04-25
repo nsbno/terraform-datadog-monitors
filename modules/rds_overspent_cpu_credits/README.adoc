@@ -23,7 +23,7 @@ module "database" {
 }
 
 module "datadog_aurora_cpu_credits" {
-  source = "github.com/nsbno/terraform-datadog-monitors//modules/rds_overspent_instance_credits?ref=rds-overspent-credits"
+  source = "github.com/nsbno/terraform-datadog-monitors//modules/rds_overspent_cpu_credits?ref=x.y.z"
   db_cluster_name = module.database.cluster_id
   
   slack_channel_to_notify = "tmp-test-slack"
@@ -40,7 +40,7 @@ module "database" {
 }
 
 module "datadog_aurora_cpu_credits" {
-  source = "github.com/nsbno/terraform-datadog-monitors//modules/rds_overspent_instance_credits?ref=rds-overspent-credits"
+  source = "github.com/nsbno/terraform-datadog-monitors//modules/rds_overspent_cpu_credits?ref=x.y.z"
   db_cluster_name = module.database.cluster_id
   
   db_cluster_display_name = "Alternative Transport"
