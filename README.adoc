@@ -32,6 +32,9 @@ Monitor for high integration latency and 5xx HTTP responses.
 link:./modules/api_gateway/[RDS Overspent CPU Credits Monitor]::
 Monitor if an Aurora Cluster is charging for extra CPU credits.
 
+link:./modules/sqs_dlq/[Datadog SQS DLQ]::
+Monitor for messages in a SQS DLQ.
+
 == Relevant Repositories
 
 You can use these repos together with this repo!
