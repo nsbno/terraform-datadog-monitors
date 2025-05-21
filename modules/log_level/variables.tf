@@ -61,3 +61,9 @@ variable "index_to_monitor" {
 
   default = "main"
 }
+
+variable "notification_preset_name" {
+  default     = "hide_handles"
+  type        = string
+  description = "The notification preset to use for this monitor. See https://docs.datadoghq.com/monitors/notifications/?tab=notificationpresets#notification-presets"
+}
