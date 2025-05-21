@@ -9,25 +9,26 @@ locals {
   environment       = local.split_alias[local.environment_index]
   env_tag           = "env:${local.environment}"
 
-  latency_monitor_message = <<EOT
+  latency_monitor_message = <<-EOT
   @slack-${var.slack_channel_to_notify}
-    {{#is_alert}}
-    API: ${var.api_name}
-    Threshold: ${var.latency_alert_threshold} ms
-    Current value: {{value}} ms
-    {{/is_alert}}
 
-    {{#is_recovery}}
-    Latency is ok again.
-    {{/is_recovery}}
+  {{#is_alert}}
+  API: ${var.api_name}
+  Threshold: ${var.latency_alert_threshold} ms
+  Current value: {{value}} ms
+  {{/is_alert}}
+
+  {{#is_recovery}}
+  Latency is ok again.
+  {{/is_recovery}}
   EOT
 
-  error_5xx_message = <<EOT
+  error_5xx_message = <<-EOT
   @slack-${var.slack_channel_to_notify}
 
-    {{#is_alert}}
-    {{value}} 5xx errors last ${var.error_5xx_period}}
-    {{/is_alert}}
+  {{#is_alert}}
+  {{value}} 5xx errors last ${var.error_5xx_period}}
+  {{/is_alert}}
   EOT
 }
 
