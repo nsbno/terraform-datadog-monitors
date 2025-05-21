@@ -76,7 +76,7 @@ resource "datadog_monitor" "monitor_5xx" {
   include_tags             = var.include_tags
   notification_preset_name = var.notification_preset_name
 
-  query   = "sum(last_${var.latency_evaluation_period}):avg:aws.apigateway.5xxerror{${local.env_tag}, apiname:${var.api_name}}.as_count() >= ${var.error_5xx_threshold}"
+  query   = "sum(last_${var.latency_evaluation_period}):sum:aws.apigateway.5xxerror{${local.env_tag}, apiname:${var.api_name}}.as_count() >= ${var.error_5xx_threshold}"
   message = local.error_5xx_message
 
   lifecycle {
