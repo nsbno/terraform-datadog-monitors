@@ -9,25 +9,26 @@ locals {
   environment       = local.split_alias[local.environment_index]
   env_tag           = "env:${local.environment}"
 
-  latency_monitor_message = <<EOT
+  latency_monitor_message = <<-EOT
   @slack-${var.slack_channel_to_notify}
-    {{#is_alert}}
-    API: ${var.api_name}
-    Threshold: ${var.latency_alert_threshold} ms
-    Current value: {{value}} ms
-    {{/is_alert}}
 
-    {{#is_recovery}}
-    Latency is ok again.
-    {{/is_recovery}}
+  {{#is_alert}}
+  API: ${var.api_name}
+  Threshold: ${var.latency_alert_threshold} ms
+  Current value: {{value}} ms
+  {{/is_alert}}
+
+  {{#is_recovery}}
+  Latency is ok again.
+  {{/is_recovery}}
   EOT
 
-  error_5xx_message = <<EOT
+  error_5xx_message = <<-EOT
   @slack-${var.slack_channel_to_notify}
 
-    {{#is_alert}}
-    {{value}} 5xx errors last ${var.error_5xx_period}}
-    {{/is_alert}}
+  {{#is_alert}}
+  {{value}} 5xx errors last ${var.error_5xx_period}
+  {{/is_alert}}
   EOT
 }
 
@@ -76,7 +77,7 @@ resource "datadog_monitor" "monitor_5xx" {
   include_tags             = var.include_tags
   notification_preset_name = var.notification_preset_name
 
-  query   = "sum(last_${var.latency_evaluation_period}):avg:aws.apigateway.5xxerror{${local.env_tag}, apiname:${var.api_name}}.as_count() >= ${var.error_5xx_threshold}"
+  query   = "sum(last_${var.latency_evaluation_period}):sum:aws.apigateway.5xxerror{${local.env_tag}, apiname:${var.api_name}}.as_count() >= ${var.error_5xx_threshold}"
   message = local.error_5xx_message
 
   lifecycle {

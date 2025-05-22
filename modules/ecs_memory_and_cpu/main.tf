@@ -36,7 +36,7 @@ resource "datadog_monitor" "high_memory_usage" {
 @slack-${var.slack_channel_to_notify}
 
 {{#is_alert}}
-  ${local.display_name} has crossed the memory usage threshold of {{threshold}}%. Average last 5 minutes was {{value}}%
+  ${local.display_name} has crossed the memory usage threshold of {{threshold}}%. Average last ${var.memory_period} was {{value}}%
 {{/is_alert}}
 
 {{#is_recovery}}
@@ -69,7 +69,7 @@ resource "datadog_monitor" "high_cpu_usage" {
 @slack-${var.slack_channel_to_notify}
 
 {{#is_alert}}
-  ${local.display_name} has crossed the CPU usage threshold of {{threshold}}%. Average last 5 minutes was {{value}}%
+  ${local.display_name} has crossed the CPU usage threshold of {{threshold}}%. Average last ${var.cpu_period} was {{value}}%
 {{/is_alert}}
 
 {{#is_recovery}}

@@ -33,8 +33,8 @@ resource "datadog_monitor" "unhealthy_host_count" {
   notification_preset_name = var.notification_preset_name
   require_full_window      = var.require_full_window
 
-  query   = "min(last_${var.period}):min:aws.applicationelb.healthy_host_count{${local.target_group_tag}, ${local.load_balancer_tag}} < ${var.threshold}"
-  message = var.workflow_to_attach != null ? var.workflow_to_attach : <<EOT
+  query   = "min(last_${var.period}):sum:aws.applicationelb.healthy_host_count{${local.target_group_tag}, ${local.load_balancer_tag}} < ${var.threshold}"
+  message = var.workflow_to_attach != null ? var.workflow_to_attach : <<-EOT
   @slack-${var.slack_channel_to_notify}
 
   {{#is_alert}}
