@@ -27,7 +27,7 @@ locals {
   @slack-${var.slack_channel_to_notify}
 
   {{#is_alert}}
-  {{value}} 5xx errors last ${var.error_5xx_period}}
+  {{value}} 5xx errors last ${var.error_5xx_period}
   {{/is_alert}}
   EOT
 }
