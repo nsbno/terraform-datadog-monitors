@@ -3,9 +3,9 @@ variable "service_name" {
   type        = string
 }
 
-variable "target_group_arn_suffix" {
-  description = "Target Group to monitor"
-  type        = string
+variable "target_group_arn_suffixes" {
+  description = "Target groups to monitor"
+  type        = list(string)
 }
 
 variable "load_balancer_arn_suffix" {
