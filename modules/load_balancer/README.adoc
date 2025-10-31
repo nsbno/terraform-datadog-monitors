@@ -54,10 +54,10 @@ module "service" {
 module "datadog_load_balancer" {
   source = "github.com/nsbno/terraform-datadog-monitors//modules/load_balancer?ref=x.y.z"
 
-  service_name             = module.service.service_name
-  service_display_name     = "Infrademo Demo App"
-  target_group_arn_suffix  = module.service.target_group_arn_suffixes[0]
-  load_balancer_arn_suffix = module.metadata.load_balancer.arn_suffix
+  service_name              = module.service.service_name
+  service_display_name      = "Infrademo Demo App"
+  target_group_arn_suffixes = concat(values(module.service.target_group_arn_suffixes), values(module.service.secondary_target_group_arn_suffixes))
+  load_balancer_arn_suffix  = module.metadata.load_balancer.arn_suffix
 
   threshold    = 2
   period       = "10m"
