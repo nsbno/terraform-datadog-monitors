@@ -47,7 +47,7 @@ variable "priority" {
   description = "The priority of the monitor. Can be one of: 1, 2, 3, 4"
   type        = number
 
-  default = 2
+  default = 4
 }
 
 variable "evaluation_delay" {

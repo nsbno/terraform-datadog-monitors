@@ -38,7 +38,7 @@ variable "priority" {
   description = "The priority of the monitor. Can be one of: 1, 2, 3, 4"
   type        = number
 
-  default = 3
+  default = 4
 }
 
 variable "workflow_to_attach" {

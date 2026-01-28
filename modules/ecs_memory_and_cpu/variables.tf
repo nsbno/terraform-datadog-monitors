@@ -47,7 +47,7 @@ variable "memory_priority" {
   description = "The priority of the memory monitor. Can be one of: 1, 2, 3, 4"
   type        = number
 
-  default = 2
+  default = 4
 }
 
 variable "cpu_alert_threshold" {
@@ -69,6 +69,6 @@ variable "cpu_priority" {
   description = "The priority of the CPU monitor. Can be one of: 1, 2, 3, 4"
   type        = number
 
-  default = 2
+  default = 4
 }
 
