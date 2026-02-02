@@ -1,9 +1,9 @@
-= SQS Old Messages Monitoring
+= SQS Stale Messages Monitoring
 :!toc-title:
 :!toc-placement:
 :toc:
 
-Monitor for old messages in a SQS queue based on the approximate age of the oldest message.
+Monitor for stale messages in a SQS queue based on the approximate age of the oldest message.
 
 toc::[]
 
@@ -26,8 +26,8 @@ module "service" {
   [...]
 }
 
-module "datadog_sqs_old_messages" {
-  source = "github.com/nsbno/terraform-datadog-monitors//modules/sqs_old_messages?ref=x.y.z"
+module "datadog_sqs_stale_messages" {
+  source = "github.com/nsbno/terraform-datadog-monitors//modules/sqs_stale_messages?ref=x.y.z"
 
   service_name = module.datadog_service.service_name
   queue_name   = "demo-queue"
@@ -50,15 +50,15 @@ module "service" {
   [...]
 }
 
-module "datadog_sqs_old_messages" {
-  source = "github.com/nsbno/terraform-datadog-monitors//modules/sqs_old_messages?ref=x.y.z"
+module "datadog_sqs_stale_messages" {
+  source = "github.com/nsbno/terraform-datadog-monitors//modules/sqs_stale_messages?ref=x.y.z"
 
   service_name         = module.datadog_service.service_name
   service_display_name = "Infrademo Demo App"
   queue_name           = "demo-queue"
 
-  threshold         = 60  # Critical at 60 seconds
-  warning_threshold = 30  # Warning at 30 seconds
+  threshold         = 600  # Critical at 600 seconds (10 minutes)
+  warning_threshold = 300  # Warning at 300 seconds (5 minutes)
   period            = "5m"
 
   # If you want to use your team's own workflow

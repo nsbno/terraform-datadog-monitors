@@ -37,14 +37,14 @@ variable "threshold" {
   description = "Critical threshold: age in seconds for the oldest message to trigger an alert"
   type        = number
 
-  default = 60
+  default = 600
 }
 
 variable "warning_threshold" {
   description = "Warning threshold: age in seconds for the oldest message to trigger a warning"
   type        = number
 
-  default = 30
+  default = 300
 }
 
 variable "period" {
