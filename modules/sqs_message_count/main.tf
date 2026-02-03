@@ -19,7 +19,7 @@ data "aws_ssm_parameter" "team_name" {
 }
 
 resource "datadog_monitor" "sqs_message_count" {
-  name = "${local.display_name}: ${var.queue_name}: Queue has a high number of visible messages"
+  name = "${var.queue_name}: Queue has more than ${var.threshold} visible messages"
   type = "query alert"
   tags = compact([local.account_name_tag, local.service_tag, local.env_tag, local.team_tag])
 
@@ -31,7 +31,7 @@ resource "datadog_monitor" "sqs_message_count" {
   notification_preset_name = var.notification_preset_name
   require_full_window      = var.require_full_window
 
-  query   = "avg(last_${var.period}):avg:aws.sqs.approximate_number_of_messages_visible{queuename:${lower(var.queue_name)}} by {queuename,region} > ${var.threshold}"
+  query   = "min(last_${var.period}):min:aws.sqs.approximate_number_of_messages_visible{queuename:${lower(var.queue_name)}} by {queuename,region} > ${var.threshold}"
   message = var.workflow_to_attach != null ? var.workflow_to_attach : <<-EOT
   @slack-${var.slack_channel_to_notify}
 

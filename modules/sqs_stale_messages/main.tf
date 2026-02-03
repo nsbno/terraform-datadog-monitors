@@ -19,7 +19,7 @@ data "aws_ssm_parameter" "team_name" {
 }
 
 resource "datadog_monitor" "sqs_stale_messages" {
-  name = "${local.display_name}: ${var.queue_name}: Queue has a high age of oldest message"
+  name = "${var.queue_name}: Queue has message older than ${var.threshold} seconds"
   type = "query alert"
   tags = compact([local.account_name_tag, local.service_tag, local.env_tag, local.team_tag])
 
