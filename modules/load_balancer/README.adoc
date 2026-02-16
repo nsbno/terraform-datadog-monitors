@@ -3,7 +3,7 @@
 :!toc-placement:
 :toc:
 
-Monitor for unhealthy host count in Elastic Loadbalancer.
+Monitor for unhealthy host count and 5xx errors in Application Load Balancer.
 
 toc::[]
 
@@ -61,6 +61,9 @@ module "datadog_load_balancer" {
 
   threshold    = 2
   period       = "10m"
+
+  alb_5xx_threshold  = 10
+  alb_5xx_period     = "5m"
 
   # If you want to use your team's own workflow
   workflow_to_attach = "@workflow-notify-slack-of-monitor-event"

@@ -88,3 +88,34 @@ variable "notification_preset_name" {
   type        = string
   description = "The notification preset to use for this monitor. See https://docs.datadoghq.com/monitors/notifications/?tab=notificationpresets#notification-presets"
 }
+
+/*
+ * == 5xx Monitor Configuration
+ */
+variable "enable_5xx_monitor" {
+  description = "Whether to enable the 5xx error rate monitor"
+  type        = bool
+
+  default = true
+}
+
+variable "alb_5xx_threshold" {
+  description = "Number of 5xx errors to trigger an alert"
+  type        = number
+
+  default = 10
+}
+
+variable "alb_5xx_period" {
+  description = "The time window to check for 5xx errors"
+  type        = string
+
+  default = "5m"
+}
+
+variable "alb_5xx_priority" {
+  description = "The priority of the 5xx monitor. Can be one of: 1, 2, 3, 4"
+  type        = number
+
+  default = 4
+}

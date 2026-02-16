@@ -21,7 +21,7 @@ data "aws_ssm_parameter" "team_name" {
 }
 
 resource "datadog_monitor" "unhealthy_host_count" {
-  name = "${local.display_name}: Unhealthy host count"
+  name = "${local.display_name}: Low healthy host count"
   type = "query alert"
   tags = compact([local.account_name_tag, local.service_tag, local.env_tag, local.team_tag])
 
@@ -38,11 +38,47 @@ resource "datadog_monitor" "unhealthy_host_count" {
   @slack-${var.slack_channel_to_notify}
 
   {{#is_alert}}
-    ${local.display_name}: Unhealthy host count of {{value}}. 
+    ${local.display_name}: Healthy host count is {{value}}, below threshold of ${var.threshold}.
   {{/is_alert}}
 
   {{#is_recovery}}
-    ${local.display_name} is back to a healthy host count of {{value}}.
+    ${local.display_name}: Healthy host count is back to {{value}}.
+  {{/is_recovery}}
+  EOT
+
+  lifecycle {
+    precondition {
+      condition     = (var.workflow_to_attach != null) != (var.slack_channel_to_notify != null)
+      error_message = "Exactly one of workflow_to_attach or slack_channel_to_notify must be provided, not both."
+    }
+  }
+}
+
+resource "datadog_monitor" "alb_5xx" {
+  count = var.enable_5xx_monitor ? 1 : 0
+
+  name = "${local.display_name}: 5xx Errors (ALB)"
+  type = "query alert"
+  tags = compact([local.account_name_tag, local.service_tag, local.env_tag, local.team_tag])
+
+  priority         = var.alb_5xx_priority
+  evaluation_delay = var.evaluation_delay
+  on_missing_data  = var.on_missing_data
+
+  include_tags             = var.include_tags
+  notification_preset_name = var.notification_preset_name
+  require_full_window      = var.require_full_window
+
+  query   = "sum(last_${var.alb_5xx_period}):sum:aws.applicationelb.httpcode_elb_5xx{${local.load_balancer_tag}}.as_count() > ${var.alb_5xx_threshold}"
+  message = var.workflow_to_attach != null ? var.workflow_to_attach : <<-EOT
+  @slack-${var.slack_channel_to_notify}
+
+  {{#is_alert}}
+    ${local.display_name}: High 5xx error rate detected. {{value}} 5xx errors in the last ${var.alb_5xx_period}.
+  {{/is_alert}}
+
+  {{#is_recovery}}
+    ${local.display_name}: 5xx error rate has returned to normal.
   {{/is_recovery}}
   EOT
 
