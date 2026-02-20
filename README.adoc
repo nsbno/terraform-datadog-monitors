@@ -35,6 +35,9 @@ Monitor if an Aurora Cluster is charging for extra CPU credits.
 link:./modules/sqs_dlq/[Datadog SQS DLQ]::
 Monitor for messages in a SQS DLQ.
 
+link:./modules/lambda_errors/[Datadog Lambda Errors]::
+Monitor for AWS Lambda function invocation errors.
+
 == Relevant Repositories
 
 You can use these repos together with this repo!
