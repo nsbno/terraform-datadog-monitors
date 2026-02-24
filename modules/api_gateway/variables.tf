@@ -3,6 +3,12 @@ variable "api_name" {
   type        = string
 }
 
+variable "environment" {
+  description = "Override the environment tag value. If not set, it is derived from the AWS account alias suffix."
+  type        = string
+  default     = null
+}
+
 variable "api_display_name" {
   description = "The display name of the service for the monitor"
   type        = string

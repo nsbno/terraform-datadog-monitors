@@ -4,10 +4,11 @@ locals {
   display_name = var.api_display_name != null ? var.api_display_name : title(var.api_name)
 
   # The account alias includes the name of the environment we are in as a suffix
-  split_alias       = split("-", data.aws_iam_account_alias.this.account_alias)
-  environment_index = length(local.split_alias) - 1
-  environment       = local.split_alias[local.environment_index]
-  env_tag           = "env:${local.environment}"
+  split_alias         = split("-", data.aws_iam_account_alias.this.account_alias)
+  environment_index   = length(local.split_alias) - 1
+  derived_environment = local.split_alias[local.environment_index]
+  environment         = coalesce(var.environment, local.derived_environment)
+  env_tag             = "env:${local.environment}"
 
   latency_monitor_message = <<-EOT
   @slack-${var.slack_channel_to_notify}
