@@ -69,7 +69,7 @@ resource "datadog_monitor" "alb_5xx" {
   notification_preset_name = var.notification_preset_name
   require_full_window      = var.require_full_window
 
-  query   = "sum(last_${var.alb_5xx_period}):sum:aws.applicationelb.httpcode_elb_5xx{${local.target_groups_tags} AND ${local.load_balancer_tag}}.as_count() > ${var.alb_5xx_threshold}"
+  query   = "sum(last_${var.alb_5xx_period}):sum:aws.applicationelb.httpcode_target_5xx{${local.target_groups_tags} AND ${local.load_balancer_tag}}.as_count() > ${var.alb_5xx_threshold}"
   message = var.workflow_to_attach != null ? var.workflow_to_attach : <<-EOT
   @slack-${var.slack_channel_to_notify}
 
